@@ -7,14 +7,29 @@ import Button from '../Button'
 import { FiPhone } from "react-icons/fi"
 import { SiGmail } from "react-icons/si"
 import { IoLocationSharp } from "react-icons/io5"
+import emailjs from '@emailjs/browser'
+import { useRef } from 'react'
 
 const Contact = () => {
+
+    const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm('service_1vv4vfp', 'template_lgwt7k4', form.current, 'lX5CtzW61URd9HwzP')
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+    }
   return (
     <section id='Contact' className='py-[80px]'>
         <Container>
             <Heading text='Contact Me' className='text-6xl pb-14 text-center' as='h2'/>
             <Flex className='justify-between gap-x-16'>
-                <div className='w-[30%]'>
+                <div className='w-[50%]'>
                     <div className='flex bg-bgColor p-5 rounded-lg items-center'>
                         <FiPhone className='text-[25px]'/>
                         <Paragraph className='font-bold pl-2.5' text='01724010025'/>
@@ -29,32 +44,21 @@ const Contact = () => {
                     </div>
                 </div>
 
-                <div className='w-[70%]'>
-                    <Flex className='justify-between'>
-                        <div className='w-1/2'>
-                            <Paragraph text='First Name'/>
-                            <input type="text" className='bg-bgColor mt-2.5 w-[90%] h-[45px] outline-primaryColor  rounded-lg' />
+                <div className='w-[50%]'>
+                        <form ref={form} onSubmit={sendEmail}>
+                        <div className='w-full'>
+                            <Paragraph text='Name'/>
+                            <input type="text" name='from_name' placeholder='Enter your name' className='bg-bgColor mt-2.5 w-[90%] h-[45px] outline-primaryColor rounded-lg px-3' />
                         </div>
-                        <div className='w-1/2'>
-                            <Paragraph text='Last Name'/>
-                            <input type="text" className='bg-bgColor mt-2.5 w-[90%] h-[45px] outline-primaryColor rounded-lg' />
-                        </div>
-                    </Flex>
-
-                    <Flex className='justify-between pt-8'>
-                <div className='w-1/2'>
+    
+                <div className='w-full pt-5'>
                     <Paragraph text='Email'/>
-                    <input type="email" className='bg-bgColor mt-2.5 w-[90%] h-[45px] outline-primaryColor rounded-lg'/>
+                    <input type="email" name='from-email'placeholder='Enter your email' className='bg-bgColor mt-2.5 w-[90%] h-[45px] outline-primaryColor rounded-lg px-3'/>
                 </div>
-                <div className='w-1/2'>
-                    <Paragraph text='Phone Number'/>
-                    <input type="number" className='bg-bgColor mt-2.5 w-[90%] h-[45px] outline-primaryColor rounded-lg'/>
-                </div>
-            </Flex>
 
             <div>
                 <Paragraph text='Message' className='pt-8 pb-2.5 '/>
-                <textarea name="" id="" cols="60" rows="8" className='p-2.5 bg-bgColor outline-primaryColor rounded-lg'>Type your message...</textarea>
+                <textarea name="message" id="" cols="60" rows="8" placeholder='Typeing your message' className='p-2.5 bg-bgColor outline-primaryColor rounded-lg'></textarea>
             </div>
 
             <Flex>
@@ -65,39 +69,10 @@ const Contact = () => {
             <div className='mt-5'>
                 <Button text='Submit'/>
             </div>
+            </form>
                 </div>
+                       
             </Flex>
-            {/* <Flex className='justify-between'>
-                <div className='w-1/2'>
-                    <Paragraph text='First Name'/>
-                    <input type="text" className='bg-bgColor mt-2.5 w-[90%] h-[45px] outline-none border-2 border-primaryColor rounded-lg' />
-                </div>
-                <div className='w-1/2'>
-                    <Paragraph text='Last Name'/>
-                    <input type="text" className='bg-bgColor mt-2.5 w-[90%] h-[45px] outline-none border-2 border-primaryColor rounded-lg' />
-                </div>
-            </Flex>
-            <Flex className='justify-between pt-8'>
-                <div className='w-1/2'>
-                    <Paragraph text='Email'/>
-                    <input type="email" className='bg-bgColor mt-2.5 w-[90%] h-[45px] outline-none border-2 border-primaryColor rounded-lg' />
-                </div>
-                <div className='w-1/2'>
-                    <Paragraph text='Phone Number'/>
-                    <input type="number" className='bg-bgColor mt-2.5 w-[90%] h-[45px] outline-none border-2 border-primaryColor rounded-lg' />
-                </div>
-            </Flex>
-            <div>
-            <Paragraph text='Message' className='pt-8 pb-2.5 '/>
-            <textarea name="" id="" cols="150" rows="10" className='bg-bgColor outline-none border-2 border-primaryColor rounded-lg'>Type your message...</textarea>
-            </div>
-            <Flex>
-                <input type="checkbox" />
-                <Paragraph text='I accept the terms' className='pl-2.5'/>
-            </Flex>
-            <div className='text-center mt-5'>
-                <Button text='Submit'/>
-            </div> */}
         </Container>
     </section>
   )
